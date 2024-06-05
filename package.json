@@ -1,0 +1,33 @@
+{
+  "name": "geardb",
+  "version": "1.0.5",
+  "description": "Another Local JSON Database",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/thegears/geardb.git"
+  },
+  "keywords": [
+    "db",
+    "geardb",
+    "localdb",
+    "jsondb",
+    "local",
+    "json"
+  ],
+  "author": "thegears",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/thegears/geardb/issues"
+  },
+  "homepage": "https://github.com/thegears/geardb#readme",
+  "devDependencies": {
+    "@types/node": "^20.10.5"
+  },
+  "dependencies": {
+    "steno": "^4.0.1"
+  }
+}

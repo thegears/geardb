@@ -28,6 +28,7 @@
     "@types/node": "^20.14.2"
   },
   "dependencies": {
+    "geardb": ".",
     "steno": "^4.0.2"
   }
 }

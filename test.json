@@ -1,4 +1,18 @@
 {
-  "sa": "as",
-  "list": []
+  "testFindAndSet": [
+    {
+      "userId": "2121",
+      "values": [
+        {
+          "id": 1
+        },
+        {
+          "id": 2
+        },
+        {
+          "id": 3
+        }
+      ]
+    }
+  ]
 }

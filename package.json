@@ -1,6 +1,6 @@
 {
   "name": "geardb",
-  "version": "1.0.5",
+  "version": "1.0.7",
   "description": "Another Local JSON Database",
   "main": "index.js",
   "scripts": {
@@ -25,9 +25,9 @@
   },
   "homepage": "https://github.com/thegears/geardb#readme",
   "devDependencies": {
-    "@types/node": "^20.10.5"
+    "@types/node": "^20.14.2"
   },
   "dependencies": {
-    "steno": "^4.0.1"
+    "steno": "^4.0.2"
   }
 }

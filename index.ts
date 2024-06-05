@@ -82,6 +82,107 @@ export default class {
 		await this.writer.write(JSON.stringify(data, null, 2));
 	};
 
+	public async findAndSet(key: string, value: any) {
+
+		let data = this.fileData();
+
+		const keyList = key.split(".");
+
+		if (!data[keyList[0]]) {
+			throw new Error("Key is not exist.");
+		};
+
+		if (keyList.length < 2) {
+			throw new Error("Error on findAndSet. Given key is invalid.");
+		};
+
+		let evalString = "data";
+
+		for (let i = 0; i < keyList.length; i++) {
+			if (keyList[i].includes("=")) {
+				evalString += `.find((item) => item.${keyList[i].split("=")[0]} == ${keyList[i].split("=")[1]})`;
+			} else {
+				evalString += `["${keyList[i]}"]`;
+			}
+		};
+
+		evalString += `= value`;
+
+		eval(evalString);
+
+		await this.writer.write(JSON.stringify(data, null, 2));
+	};
+
+	public async findAndPush(key: string, value: any) {
+
+		let data = this.fileData();
+
+		const keyList = key.split(".");
+
+		if (!data[keyList[0]]) {
+			throw new Error("Key is not exist.");
+		};
+
+		if (keyList.length < 2) {
+			throw new Error("Error on findAndPush. Given key is invalid.");
+		};
+
+		let evalString = "data";
+
+		for (let i = 0; i < keyList.length; i++) {
+			if (keyList[i].includes("=")) {
+				evalString += `.find((item) => item.${keyList[i].split("=")[0]} == ${keyList[i].split("=")[1]})`;
+			} else {
+				evalString += `["${keyList[i]}"]`;
+			}
+		};
+
+		evalString += `.push(value)`;
+
+		eval(evalString);
+
+		await this.writer.write(JSON.stringify(data, null, 2));
+	};
+
+	public async findAndPull(key: string) {
+
+		let data = this.fileData();
+
+		const keyList = key.split(".");
+
+		if (!data[keyList[0]]) {
+			throw new Error("Key is not exist.");
+		};
+
+		if (keyList.length < 2) {
+			throw new Error("Error on findAndPull. Given key is invalid.");
+		};
+
+		//await db.findAndPull("testFindAndSet.userId=2121")
+
+
+		let evalString = "data";
+
+		for (let i = 0; i < keyList.length; i++) {
+			if (i == keyList.length - 1) {
+				evalString += ` = ${evalString}.filter((item) => item.${keyList[i].split("=")[0]} != ${keyList[i].split("=")[1]})`;
+			}
+			else {
+				if (keyList[i].includes("=")) {
+					evalString += `.find((item) => item.${keyList[i].split("=")[0]} == ${keyList[i].split("=")[1]})`;
+				} else {
+					evalString += `["${keyList[i]}"]`;
+				}
+			}
+		};
+
+		console.log(evalString)
+
+		eval(evalString);
+
+		await this.writer.write(JSON.stringify(data, null, 2));
+	};
+
 	private fileData() {
 		let data = fs.readFileSync(this.path, {
 			encoding: "utf8", flag: "r"

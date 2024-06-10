@@ -82,6 +82,36 @@ export default class {
 		await this.writer.write(JSON.stringify(data, null, 2));
 	};
 
+	public async find(key: string) {
+
+		let data = this.fileData();
+
+		const keyList = key.split(".");
+
+		if (!data[keyList[0]]) {
+			throw new Error("Key is not exist.");
+		};
+
+		if (keyList.length < 2) {
+			throw new Error("Error on find. Given key is invalid.");
+		};
+
+		let evalString = "data = data";
+
+		for (let i = 0; i < keyList.length; i++) {
+			if (keyList[i].includes("=")) {
+				evalString += `.find((item) => item.${keyList[i].split("=")[0]} == ${keyList[i].split("=")[1]})`;
+			} else {
+				evalString += `["${keyList[i]}"]`;
+			}
+		};
+
+
+		eval(evalString);
+
+		return data
+	};
+
 	public async findAndSet(key: string, value: any) {
 
 		let data = this.fileData();

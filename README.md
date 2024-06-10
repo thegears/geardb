@@ -47,7 +47,7 @@ await db.filter("list",(value) => value !== "value");
 console.log(db.get("list")); // log []
 
 
-// -- findAndSet, findAndPush, findAndPull ---
+// -- find,findAndSet, findAndPush, findAndPull ---
 
 "test" :[
     {
@@ -60,6 +60,9 @@ console.log(db.get("list")); // log []
       ]
     }
   ]
+
+
+console.log(await db.find("test.userId=2121.values.id=1.value")); // log 122
 
 await db.findAndPush("test.userId=2121.values", { id: 12, value: 1222 }) // in test array, finds element which userId is 2121  and pushes { id: 12, value: 1222 }
 await db.findAndSet("test.userId=2121.values.id=1.value", 1222) // in test array, finds element which userId is 2121 and in values array finds element which id is 1 and sets value 1222

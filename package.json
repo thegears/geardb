@@ -1,6 +1,6 @@
 {
   "name": "geardb",
-  "version": "1.0.7",
+  "version": "1.0.8",
   "description": "Another Local JSON Database",
   "main": "index.js",
   "scripts": {

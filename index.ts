@@ -100,7 +100,7 @@ export default class {
 
 		for (let i = 0; i < keyList.length; i++) {
 			if (keyList[i].includes("=")) {
-				evalString += `.find((item) => item.${keyList[i].split("=")[0]} == ${keyList[i].split("=")[1]})`;
+				evalString += `.find((item) => item.${keyList[i].split("=")[0]} == '${keyList[i].split("=")[1]}')`;
 			} else {
 				evalString += `["${keyList[i]}"]`;
 			}
@@ -130,7 +130,7 @@ export default class {
 
 		for (let i = 0; i < keyList.length; i++) {
 			if (keyList[i].includes("=")) {
-				evalString += `.find((item) => item.${keyList[i].split("=")[0]} == ${keyList[i].split("=")[1]})`;
+				evalString += `.find((item) => item.${keyList[i].split("=")[0]} == '${keyList[i].split("=")[1]}')`;
 			} else {
 				evalString += `["${keyList[i]}"]`;
 			}
@@ -161,7 +161,7 @@ export default class {
 
 		for (let i = 0; i < keyList.length; i++) {
 			if (keyList[i].includes("=")) {
-				evalString += `.find((item) => item.${keyList[i].split("=")[0]} == ${keyList[i].split("=")[1]})`;
+				evalString += `.find((item) => item.${keyList[i].split("=")[0]} == '${keyList[i].split("=")[1]}')`;
 			} else {
 				evalString += `["${keyList[i]}"]`;
 			}
@@ -174,7 +174,7 @@ export default class {
 		await this.writer.write(JSON.stringify(data, null, 2));
 	};
 
-	public async findAndPull(key: string) {
+	public async findAndPull(key: string, value: string) {
 
 		let data = this.fileData();
 
@@ -184,29 +184,23 @@ export default class {
 			throw new Error("Key is not exist.");
 		};
 
-		if (keyList.length < 2) {
-			throw new Error("Error on findAndPull. Given key is invalid.");
-		};
-
-		//await db.findAndPull("testFindAndSet.userId=2121")
 
 
 		let evalString = "data";
 
 		for (let i = 0; i < keyList.length; i++) {
-			if (i == keyList.length - 1) {
-				evalString += ` = ${evalString}.filter((item) => item.${keyList[i].split("=")[0]} != ${keyList[i].split("=")[1]})`;
-			}
-			else {
-				if (keyList[i].includes("=")) {
-					evalString += `.find((item) => item.${keyList[i].split("=")[0]} == ${keyList[i].split("=")[1]})`;
-				} else {
-					evalString += `["${keyList[i]}"]`;
-				}
+			if (keyList[i].includes("=")) {
+				evalString += `.find((item) => item.${keyList[i].split("=")[0]} == '${keyList[i].split("=")[1]}')`;
+			} else {
+				evalString += `["${keyList[i]}"]`;
 			}
 		};
 
-		console.log(evalString)
+		if (value.includes("=")) {
+			evalString += ` = ${evalString}.filter((item) => item.${value.split("=")[0]} != '${value.split("=")[1]}')`;
+		} else {
+			evalString += ` = ${evalString}.filter((item) => item != '${value}')`;
+		}
 
 		eval(evalString);
 

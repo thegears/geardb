@@ -8,7 +8,7 @@ declare class GearDB {
 	public filter(key: string, func: (value: any, index: number, array: any[]) => boolean): Promise<void>;
 	public find(key: string): Promise<any>;
 	public findAndPush(key: string, value: any): Promise<void>;
-	public findAndPull(key: string): Promise<void>;
+	public findAndPull(key: string, value: string): Promise<void>;
 	public findAndSet(key: string, value: any): Promise<void>;
 
 	private fileData(key: string): Promise<void>;
